@@ -60,7 +60,7 @@ class Operations:
             try:
                 validated_value = cast(value)
                 if validated_value < 0:
-                    raise NegativePriceError("Пошел нахуй отсюда! Это отрицательное число")
+                    raise NegativePriceError("Это отрицательное число!")
                 return validated_value
             except ValueError:
                 continue
