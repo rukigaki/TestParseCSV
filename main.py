@@ -1,34 +1,41 @@
-# 0) И самое главное сразу же подключи git и пока что используй простой функционал git, ничего не усложняй пока что, время придет
-# 1) Мне необходимо настроить структуру проекта, возможно разнести по директориям, файлам, вынести логику в функции или возможно даже класс,
-# но тут надо смотреть, проект все таки не слишком большой.
-#
-# 2) От меня много не требуют, но я много раз слышал об расширяемости проекта, и я хочу сделать именно такой, и после того, как я это сделаю,
-# я хочу по факту расширить свой код, добавив доп. фичи, и проанализирую насколько легко мне было внедрить новые фичи в текущую архитектуру проекта.
-#
-# 3) Проект должен быть хорошо структурированным, модульным, поддерживать изоляцию логики, обеспечивать простоту тестирования,
-# а также позволять быстро вносить изменения без риска поломать остальной функционал.
-
-
 import csv
 from tabulate import tabulate
+from pathlib import Path
 
-from engine_parse import EngineParse
-from operations import Operations
+from src.engine_parse import EngineParse
+from src.operations import Operations
+
+
+def parse_func():
+    parser = EngineParse()
+    args = parser.get_args
+
+    return args
+
+def read_file(args):
+
+    path_str = Path(args.file)
+
+    if not path_str.exists():
+        raise FileNotFoundError(f"Файл не найден: {path_str}")
+
+    with open(path_str) as f:
+        reader = csv.DictReader(f)
+        table = list(reader)
+
+    return table
 
 
 def main():
 
-    parser = EngineParse()
-    args = parser.get_args
+    args = parse_func()
 
-    with open(args.file) as f:
-        reader = csv.DictReader(f)
-        table = list(reader)
+    table = read_file(args)
 
-        operations = Operations(args)
-        table = operations(table)
+    operations = Operations(args)
+    table = operations(table)
 
-        print(tabulate(tabular_data=table, headers="keys", tablefmt="grid"))
+    print(tabulate(tabular_data=table, headers="keys", tablefmt="grid"))
 
 
 if __name__ == "__main__":

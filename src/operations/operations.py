@@ -1,4 +1,5 @@
 from .constants import OPERATORS, AGGREGATE_FUNC
+from .custom_error import NegativePriceError
 
 
 class Operations:
@@ -9,8 +10,8 @@ class Operations:
         self.aggregate = arg.aggregate
 
         self._methods = {
-            self.aggregate: self.__aggregate_operation,
-            self.where: self.__filter_operation,
+            self.aggregate: self._aggregate_operation,
+            self.where: self._filter_operation,
         }
 
 
@@ -25,7 +26,7 @@ class Operations:
         return table
 
 
-    def __filter_operation(self, table_data) -> list:
+    def _filter_operation(self, table_data: list[dict]) -> list:
         for operator_key in OPERATORS:
             if operator_key in self.where:
                 column, value = self.where.split(operator_key)
@@ -39,7 +40,7 @@ class Operations:
         raise ValueError("Отсутствует оператор сравнения!")
 
 
-    def __aggregate_operation(self, table_data) -> list:
+    def _aggregate_operation(self, table_data: list[dict]) -> list:
         column, method_aggregate = self.aggregate.split("=")
         values = map(lambda x: self.simple_validation(x[column]), table_data)
 
@@ -57,7 +58,10 @@ class Operations:
     def simple_validation(value) -> int | float | str:
         for cast in (int, float):
             try:
-                return cast(value)
+                validated_value = cast(value)
+                if validated_value < 0:
+                    raise NegativePriceError("Пошел нахуй отсюда! Это отрицательное число")
+                return validated_value
             except ValueError:
                 continue
         return value
