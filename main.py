@@ -3,19 +3,18 @@ from tabulate import tabulate
 from pathlib import Path
 
 from src.engine_parse import EngineParse
-from src.operations import Operations
+from src.operations_module import Operations
 
 
 def parse_func():
     parser = EngineParse()
     args = parser.get_args
-
+    #Объект argparse
     return args
 
-def read_file(args):
 
+def read_file(args) -> list[dict]:
     path_str = Path(args.file)
-
     if not path_str.exists():
         raise FileNotFoundError(f"Файл не найден: {path_str}")
 
@@ -27,9 +26,7 @@ def read_file(args):
 
 
 def main():
-
     args = parse_func()
-
     table = read_file(args)
 
     operations = Operations(args)
