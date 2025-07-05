@@ -8,30 +8,30 @@ ___
 ___
 #### Команда вывода таблицы
 
-![Пример скриншота](assets/operation_file.png)
+![file](assets/operation_file.png)
 
 ___
 #### Команда where
 
-![Пример скриншота](assets/Screenshot 2025-07-05 at 16.20.50.png)
+![where](assets/operation_where.png)
 
 ___
 #### Команда where + order_by
 
-![Пример скриншота](assets/Screenshot 2025-07-05 at 16.23.06.png)
+![where+order_by](assets/operation_where_order_by.png)
 
 ___
 #### Команда aggregate
 
-![Пример скриншота](assets/Screenshot 2025-07-05 at 16.24.11.png)
+![aggregate](assets/operation_aggregate.png)
 
 ___
 #### Команда aggregate на отфильтрованной таблице
 
-![Пример скриншота](assets/Screenshot 2025-07-05 at 16.27.31.png)
+![aggregate+where](assets/operation_aggregate_filtered_table.png)
 
 ___
 #### Тесты
 
-![Пример скриншота](assets/Screenshot 2025-07-05 at 16.31.49.png)
+![tests](assets/tests.png)
 
